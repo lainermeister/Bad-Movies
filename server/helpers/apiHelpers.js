@@ -1,12 +1,17 @@
 const request = require('request');
 const axios = require('axios');
-const { API_KEY } = require('../../config.js');
+const path = require('path');
+const { api_key, api_url } = require('../../config.js');
 
-// write out logic/functions required to query TheMovieDB.org
 
-// FOR REFERENCE:
-// https://www.themoviedb.org/account/signup
-// https://developers.themoviedb.org/3/discover/movie-discover
-// Get your API Key and save it in your config file
+module.exports = {
+    getGenreList: () => {
+        return axios.get(`${api_url}genre/movie/list?api_key=${api_key}`)
+            .then(({ data }) => data.genres)
 
-// Don't forget to export your functions and require them within your server file
+    },
+    getMovieList: (genreID) => {
+        return axios.get(`${api_url}discover/movie?api_key=${api_key}&language=en-US&with_genres=${genreID}&sort_by=vote_average.ascen&vote_count.gte=10`)
+            .then(({ data }) => data.results)
+    }
+}
