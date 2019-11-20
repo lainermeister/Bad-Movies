@@ -13,8 +13,10 @@ module.exports = {
                 [id, year, rating, name, photo_url],
                 (err, data) => {
                     if (err) {
+                        console.log("there was an error")
                         reject(err);
                     } else {
+                        console.log("no error")
                         resolve(data)
                     }
                 })
@@ -32,6 +34,14 @@ module.exports = {
         })
     },
     deleteMovie: (id) => {
-
+        return new Promise((resolve, reject) => {
+            connection.query('DELETE FROM favorites where id = ?', [id], (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data)
+                }
+            })
+        })
     }
 }

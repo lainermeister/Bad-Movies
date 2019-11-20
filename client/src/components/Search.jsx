@@ -39,28 +39,31 @@ class Search extends React.Component {
         </button>
         <br />
         <br />
-
-        {/* Make the select options dynamic from genres !!! */}
-        {/* How can you tell which option has been selected from here? */}
-
-        <select
-          onChange={this.onDropdownChange}
-          value={this.state.selectedGenre}
-        >
-          {this.state.genres.map((genre) => {
-            return (
-              <option value={genre.id} key={genre.id}>
-                {genre.name}
-              </option>
-            );
-          })}
-        </select>
-        <br />
-        <br />
-
-        <button onClick={() => this.props.onSearch(this.state.selectedGenre)}>
-          Search
-        </button>
+        {this.props.showFaves ? (
+          ""
+        ) : (
+          <div>
+            <select
+              onChange={this.onDropdownChange}
+              value={this.state.selectedGenre}
+            >
+              {this.state.genres.map((genre) => {
+                return (
+                  <option value={genre.id} key={genre.id}>
+                    {genre.name}
+                  </option>
+                );
+              })}
+            </select>
+            <br />
+            <br />
+            <button
+              onClick={() => this.props.onSearch(this.state.selectedGenre)}
+            >
+              Search
+            </button>
+          </div>
+        )}
       </div>
     );
   }

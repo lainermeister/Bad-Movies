@@ -32,8 +32,10 @@ app.get("/favorites", function (req, res) {
     .then((movies) => res.send(movies))
     .catch((err) => res.sendStatus(404))
 })
-app.post("/delete", function (req, res) {
-  // deleteMovie(req.body.id)
+app.delete("/favorites", function (req, res) {
+  deleteMovie(req.body.id)
+    .then((data) => res.send(200))
+    .catch((err) => res.sendStatus(500))
 });
 
 app.listen(3000, function () {

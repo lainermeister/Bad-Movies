@@ -20,25 +20,36 @@ class App extends React.Component {
   }
   componentDidMount() {
     this.getMovies();
+    this.getFavorites();
   }
 
   getMovies(genreId) {
     genreId = genreId || "all";
     return axios
       .get(`/search?genreId=${genreId}`)
-      .then(({ data }) => this.setState({ movies: data }))
+      .then(({ data }) => {
+        this.setState({ movies: data });
+      })
       .catch((err) => console.error(err));
   }
 
-  saveMovie(movie) {
-    return axios
-      .post("/save", { movie: movie })
-      .then(() => axios.get("/favorites"))
-      .then(({ data }) => this.setState({ favorites: data }));
+  getFavorites() {
+    axios
+      .get("/favorites")
+      .then(({ data }) => this.setState({ favorites: data }))
+      .catch((err) => console.error(err));
   }
 
-  deleteMovie() {
-    // same as above but do something diff
+  saveFavorite(movie) {
+    return axios
+      .post("/save", { movie: movie })
+      .then(() => this.getFavorites());
+  }
+
+  deleteFavorite({ id }) {
+    return axios
+      .delete("/favorites", { data: { id: id } })
+      .then(() => this.getFavorites());
   }
 
   swapFavorites() {
@@ -48,10 +59,10 @@ class App extends React.Component {
   }
 
   movieClickHandler(movie) {
-    console.log("clicked");
     if (this.state.showFaves) {
+      this.deleteFavorite(movie);
     } else {
-      this.saveMovie(movie);
+      this.saveFavorite(movie);
     }
   }
 
