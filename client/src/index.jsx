@@ -16,6 +16,7 @@ class App extends React.Component {
     };
     this.swapFavorites = this.swapFavorites.bind(this);
     this.getMovies = this.getMovies.bind(this);
+    this.movieClickHandler = this.movieClickHandler.bind(this);
   }
   componentDidMount() {
     this.getMovies();
@@ -46,6 +47,14 @@ class App extends React.Component {
     });
   }
 
+  movieClickHandler(movie) {
+    console.log("clicked");
+    if (this.state.showFaves) {
+    } else {
+      this.saveMovie(movie);
+    }
+  }
+
   render() {
     return (
       <div className="app">
@@ -64,6 +73,7 @@ class App extends React.Component {
               this.state.showFaves ? this.state.favorites : this.state.movies
             }
             showFaves={this.state.showFaves}
+            onClick={this.movieClickHandler}
           />
         </div>
       </div>

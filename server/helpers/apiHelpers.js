@@ -20,7 +20,7 @@ module.exports = {
     _cleanMovieData: (movies) => {
         return movies.map((movie) => {
             return {
-                photo_url: 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + movie.poster_path,
+                photo_url: 'https://image.tmdb.org/t/p/w600_and_h900_bestv2' + movie.poster_path,
                 id: movie.id,
                 year: movie.release_date.slice(0, 4),
                 rating: movie.vote_average,

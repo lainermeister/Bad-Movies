@@ -16,7 +16,11 @@ class Movies extends React.Component {
       <ul className="movies">
         {this.props.movies.map((movie) => {
           return (
-            <li className="movie_item" key={movie.id}>
+            <li
+              className="movie_item"
+              key={movie.id}
+              onClick={() => this.props.onClick(movie)}
+            >
               <img src={movie.photo_url} />
               <div className="movie_description">
                 <h2>{movie.name}</h2>
