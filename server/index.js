@@ -16,7 +16,7 @@ app.get("/genres", function (req, res) {
 });
 
 app.get("/search", function (req, res) {
-  getMovieList(req.body.genre_id)
+  getMovieList(req.query.genreId)
     .then((movies) => res.send(movies))
     .catch((err) => res.sendStatus(404))
 });

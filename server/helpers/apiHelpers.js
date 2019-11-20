@@ -10,8 +10,22 @@ module.exports = {
             .then(({ data }) => data.genres)
 
     },
-    getMovieList: (genreID) => {
-        return axios.get(`${api_url}discover/movie?api_key=${api_key}&language=en-US&with_genres=${genreID}&sort_by=vote_average.ascen&vote_count.gte=10`)
-            .then(({ data }) => data.results)
+    getMovieList: (genreId) => {
+        genreId = genreId === "all" ? "" : genreId
+        console.log(`${api_url}discover/movie?api_key=${api_key}&language=en-US&with_genres=${genreId}&sort_by=vote_average.asc&vote_count.gte=10`)
+        return axios.get(`${api_url}discover/movie?api_key=${api_key}&language=en-US&with_genres=${genreId}&sort_by=vote_average.asc&vote_count.gte=10`)
+            .then(({ data }) => module.exports._cleanMovieData(data.results))
+    },
+
+    _cleanMovieData: (movies) => {
+        return movies.map((movie) => {
+            return {
+                photo_url: 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/' + movie.poster_path,
+                id: movie.id,
+                year: movie.release_date.slice(0, 4),
+                rating: movie.vote_average,
+                name: movie.original_title
+            }
+        })
     }
 }
